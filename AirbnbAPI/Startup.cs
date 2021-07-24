@@ -29,7 +29,10 @@ namespace AirbnbAPI
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DataEF"));
             });
+            services.AddCors();
             services.AddRazorPages();
+            services.AddControllers();
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "API", Version = "v1" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +49,14 @@ namespace AirbnbAPI
                 app.UseHsts();
             }
 
+            app.UseCors();
+            //open api
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "My Awesome API V1");
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -55,7 +66,7 @@ namespace AirbnbAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
