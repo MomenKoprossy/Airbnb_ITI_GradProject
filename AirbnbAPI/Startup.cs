@@ -1,3 +1,5 @@
+using App.Repository;
+using Data.Model;
 using DataEF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace AirbnbAPI
             services.AddRazorPages();
             services.AddControllers();
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "API", Version = "v1" }));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRepository<User>, UserGeneric<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

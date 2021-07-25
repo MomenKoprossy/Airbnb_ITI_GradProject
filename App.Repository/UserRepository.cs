@@ -1,5 +1,6 @@
-﻿using App.Repository.ApiClient;
-using Data.Model;
+﻿using Data.Model;
+using DataEF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,43 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-     public class UserRepository
+   public class UserRepository : IUserRepository
     {
-        private readonly IWebApiExecuter webApiExecuter;
-
-         public UserRepository (IWebApiExecuter webApiExecuter) //implementing the dependency injection 
+        private  AirbnbModel context;
+        private DbSet<User> UserEntity;
+        
+        public UserRepository(AirbnbModel context)
         {
-            this.webApiExecuter = webApiExecuter;
+            this.context = context;
+            UserEntity = context.Set<User>();
         }
-        public async Task<IEnumerable<User>> Get()
+
+        public void DeleteUser(int id)
         {
-            return await webApiExecuter.InvokeGet<IEnumerable<User>>("api/users");
+            User user = GetUser(id);
+            UserEntity.Remove(user);
+            context.SaveChanges();
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return UserEntity.AsEnumerable();
+        }
+
+        public User GetUser(int id)
+        {
+            return UserEntity.SingleOrDefault(s => s.UserId == id);
+        }
+
+        public void SaveUser(User user)
+        {
+            context.Entry(user).State = EntityState.Added;
+            context.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            context.SaveChanges();
         }
     }
 }
