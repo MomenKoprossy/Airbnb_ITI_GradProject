@@ -15,7 +15,7 @@ namespace Data.Model
         [Required]
         public string WishlistTitle { get; set; }
         [ForeignKey("User")]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public User User { get; set; }
         public ICollection<Property> Properties { get; set; }
 

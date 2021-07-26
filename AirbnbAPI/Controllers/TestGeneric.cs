@@ -1,5 +1,6 @@
 ﻿using App.Repository;
 using Data.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TestGeneric : ControllerBase
     {
         private readonly IRepository<User> _context;
@@ -26,13 +28,13 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
-        public ActionResult<User> UserById(int id)
+        public ActionResult<User> UserById(string id)
         {
             User u = _context.GetById(id);
             return u;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult DeleteUser(string id)
         {
             _context.Delete(id);
             return Ok("deleted");

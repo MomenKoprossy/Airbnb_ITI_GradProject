@@ -40,7 +40,7 @@ namespace Data.Model
         public string Type { get; set; }
         [Required]
         [ForeignKey("User")]
-        public int HostId { get; set; }
+        public string HostId { get; set; }
         public User User { get; set; }
         public ICollection<Amenity> Amenities { get; set; }
         public ICollection<Wishlist> Wishlists { get; set; }

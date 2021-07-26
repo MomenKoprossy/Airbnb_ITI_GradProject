@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-   public interface IUserRepository
+    public interface IUserRepository
     {
         void SaveUser(User user);
         IEnumerable<User> GetAllUsers();
-        User GetUser(int id);
-        void DeleteUser(int id);
+        User GetUser(string id);
+        void DeleteUser(string id);
         void UpdateUser(User user);
 
     }

@@ -1,17 +1,23 @@
 using App.Repository;
 using Data.Model;
 using DataEF;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+
 
 namespace AirbnbAPI
 {
@@ -31,6 +37,28 @@ namespace AirbnbAPI
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DataEF"));
             });
+            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<AirbnbModel>();
+
+            //jwt
+            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+
             services.AddCors();
             services.AddRazorPages();
             services.AddControllers();
@@ -54,6 +82,7 @@ namespace AirbnbAPI
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseCors();
             //open api
             app.UseSwagger();
@@ -67,6 +96,7 @@ namespace AirbnbAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
