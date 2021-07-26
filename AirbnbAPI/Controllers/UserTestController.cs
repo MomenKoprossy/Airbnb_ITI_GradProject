@@ -82,5 +82,13 @@ namespace AirbnbAPI.Controllers
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
         }
+
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await SignInManager.SignOutAsync();
+            return Ok();
+        }
     }
 }

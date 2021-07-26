@@ -31,6 +31,11 @@ namespace App.Repository
             context.SaveChanges();
         }
 
+        public void Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<T> GetAll()
         {
             return PropertyEntity.AsEnumerable();
@@ -39,6 +44,11 @@ namespace App.Repository
         public T GetById(int id)
         {
             return PropertyEntity.SingleOrDefault(s => s.PropertyId == id);
+        }
+
+        public T GetById(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void Insert(T obj)
