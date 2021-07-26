@@ -15,7 +15,7 @@ namespace Data.Model
         [ForeignKey("Property")]
         public int PropertyID { get; set; }
         [ForeignKey("User")]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [Required]
         [Column(TypeName = "Date")]
         public DateTime ReservationSartDate { get; set; }

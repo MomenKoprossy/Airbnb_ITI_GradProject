@@ -1,17 +1,16 @@
 ﻿using Data.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace DataEF
 {
-    public class AirbnbModel : DbContext
+    public class AirbnbModel : IdentityDbContext<User>
     {
-        public AirbnbModel(DbContextOptions options) : base(options)
+        public AirbnbModel(DbContextOptions<AirbnbModel> options) : base(options)
         {
 
         }
-
-        public DbSet<User> Users { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<HostLanguage> HostLanguages { get; set; }
@@ -22,6 +21,8 @@ namespace DataEF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<HostLanguage>()
                 .HasKey(c => new { c.HostID, c.Language });
             modelBuilder.Entity<PropertyImage>()

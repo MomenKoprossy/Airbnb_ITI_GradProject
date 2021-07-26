@@ -20,18 +20,18 @@ namespace AirbnbAPI.Controllers
             _context = context;
         }
         [HttpGet]
-       public IActionResult getall()
+        public IActionResult getall()
         {
             return Ok(_context.GetAllUsers());
         }
         [HttpGet("{id}")]
-        public ActionResult<User> UserById(int id)
+        public ActionResult<User> UserById(string id)
         {
             User u = _context.GetUser(id);
             return u;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult DeleteUser(string id)
         {
             _context.DeleteUser(id);
             return Ok("deleted");
@@ -41,7 +41,7 @@ namespace AirbnbAPI.Controllers
 
         public IActionResult AddUser(User user)
         {
-           
+
             _context.SaveUser(user);
             return Ok("User Adeed");
         }
@@ -52,7 +52,7 @@ namespace AirbnbAPI.Controllers
             return Ok("User Updated");
         }
 
-       
+
 
 
     }

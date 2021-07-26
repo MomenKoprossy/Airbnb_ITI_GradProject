@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-   public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
-        private  AirbnbModel context;
+        private AirbnbModel context;
         private DbSet<User> UserEntity;
-        
+
         public UserRepository(AirbnbModel context)
         {
             this.context = context;
             UserEntity = context.Set<User>();
         }
 
-        public void DeleteUser(int id)
+        public void DeleteUser(string id)
         {
             User user = GetUser(id);
             UserEntity.Remove(user);
@@ -29,12 +29,12 @@ namespace App.Repository
 
         public IEnumerable<User> GetAllUsers()
         {
-            return UserEntity.AsEnumerable();
+            return context.Users.ToList();
         }
 
-        public User GetUser(int id)
+        public User GetUser(string id)
         {
-            return UserEntity.SingleOrDefault(s => s.UserId == id);
+            return UserEntity.SingleOrDefault(s => s.Id == id);
         }
 
         public void SaveUser(User user)

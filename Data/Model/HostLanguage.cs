@@ -11,7 +11,7 @@ namespace Data.Model
     public class HostLanguage
     {
         [ForeignKey("User")]
-        public int HostID { get; set; }
+        public string HostID { get; set; }
         public string Language { get; set; }
         public User User { get; set; }
     }

@@ -15,7 +15,7 @@ namespace Data.Model
         public int PropertyID { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Review { get; set; }
         [Required]
         public string Rating { get; set; }

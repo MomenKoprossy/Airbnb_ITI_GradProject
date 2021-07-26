@@ -25,7 +25,7 @@ namespace App.Repository
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             T user = GetById(id);
             UserEntity.Remove(user);
@@ -37,13 +37,13 @@ namespace App.Repository
             return UserEntity.AsEnumerable();
         }
 
-       
 
-       
 
-        public T GetById(int id)
+
+
+        public T GetById(string id)
         {
-            return UserEntity.SingleOrDefault(s => s.UserId == id);
+            return UserEntity.SingleOrDefault(s => s.Id == id);
         }
 
         public void Insert(T obj)
