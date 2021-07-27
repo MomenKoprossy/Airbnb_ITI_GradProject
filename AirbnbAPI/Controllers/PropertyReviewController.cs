@@ -11,10 +11,10 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PropertyController : ControllerBase
+    public class PropertyReviewController : ControllerBase
     {
-        private readonly IRepository<Property> _context;
-        public PropertyController(IRepository<Property> context)
+        private readonly IRepository<PropertyReview> _context;
+        public PropertyReviewController(IRepository<PropertyReview> context)
         {
             _context = context;
         }
@@ -24,31 +24,31 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
-        public ActionResult<Property> PropertyById(int id)
+        public ActionResult<PropertyReview> PropertyReviewById(int id)
         {
-            Property p = _context.GetById(id,"");
+            PropertyReview p = _context.GetById(id,"");
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteProperty(int id)
+        public IActionResult DeletePropertyReview(int id)
         {
             _context.Delete(id,"");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddProperty(Property property)
+        public IActionResult AddPropertyReview(PropertyReview PropertyReview)
         {
 
-            _context.Insert(property);
-            return Ok("property Adeed");
+            _context.Insert(PropertyReview);
+            return Ok("PropertyReview Adeed");
         }
 
         [HttpPut]
-        public IActionResult UpdateProperty(Property property)
+        public IActionResult UpdatePropertyReview(PropertyReview PropertyReview)
         {
-            _context.Update(property);
-            return Ok("property Updated");
+            _context.Update(PropertyReview);
+            return Ok("PropertyReview Updated");
         }
 
     }

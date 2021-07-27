@@ -11,10 +11,10 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PropertyController : ControllerBase
+    public class WishlistController : ControllerBase
     {
-        private readonly IRepository<Property> _context;
-        public PropertyController(IRepository<Property> context)
+        private readonly IRepository<Wishlist> _context;
+        public WishlistController(IRepository<Wishlist> context)
         {
             _context = context;
         }
@@ -24,31 +24,31 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
-        public ActionResult<Property> PropertyById(int id)
+        public ActionResult<Wishlist> WishlistById(int id)
         {
-            Property p = _context.GetById(id,"");
+            Wishlist p = _context.GetById(id, "");
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteProperty(int id)
+        public IActionResult DeleteWishlist(int id)
         {
-            _context.Delete(id,"");
+            _context.Delete(id, "");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddProperty(Property property)
+        public IActionResult AddWishlist(Wishlist Wishlist)
         {
 
-            _context.Insert(property);
-            return Ok("property Adeed");
+            _context.Insert(Wishlist);
+            return Ok("Wishlist Adeed");
         }
 
         [HttpPut]
-        public IActionResult UpdateProperty(Property property)
+        public IActionResult UpdateWishlist(Wishlist Wishlist)
         {
-            _context.Update(property);
-            return Ok("property Updated");
+            _context.Update(Wishlist);
+            return Ok("Wishlist Updated");
         }
 
     }

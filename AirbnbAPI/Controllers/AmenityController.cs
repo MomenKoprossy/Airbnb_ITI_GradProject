@@ -11,10 +11,10 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PropertyController : ControllerBase
+    public class AmenityController : ControllerBase
     {
-        private readonly IRepository<Property> _context;
-        public PropertyController(IRepository<Property> context)
+        private readonly IRepository<Amenity> _context;
+        public AmenityController(IRepository<Amenity> context)
         {
             _context = context;
         }
@@ -24,31 +24,31 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
-        public ActionResult<Property> PropertyById(int id)
+        public ActionResult<Amenity> AmenityById(int id)
         {
-            Property p = _context.GetById(id,"");
+            Amenity p = _context.GetById(id,"");
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteProperty(int id)
+        public IActionResult DeleteAmenity(int id)
         {
             _context.Delete(id,"");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddProperty(Property property)
+        public IActionResult AddAmenity(Amenity Amenity)
         {
 
-            _context.Insert(property);
-            return Ok("property Adeed");
+            _context.Insert(Amenity);
+            return Ok("Amenity Adeed");
         }
 
         [HttpPut]
-        public IActionResult UpdateProperty(Property property)
+        public IActionResult UpdateAmenity(Amenity Amenity)
         {
-            _context.Update(property);
-            return Ok("property Updated");
+            _context.Update(Amenity);
+            return Ok("Amenity Updated");
         }
 
     }

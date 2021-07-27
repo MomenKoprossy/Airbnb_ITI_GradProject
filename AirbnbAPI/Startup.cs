@@ -64,6 +64,13 @@ namespace AirbnbAPI
             services.AddControllers();
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "API", Version = "v1" }));
             services.AddScoped<IRepository<Property>, PropertyRepository>();
+            services.AddScoped<IRepository<PropertyReview>, PropertyReviewRepository>();
+            services.AddScoped<IRepository<Amenity>, AmenityRepository>();
+            services.AddScoped<IRepository<Reservation>, ReservationRepository>();
+            services.AddScoped<IRepository<HostLanguage>, HostLanguageRepository>();
+            services.AddScoped<IRepository<Wishlist>, WishlistRepository>();
+            services.AddScoped<IRepository<PropertyImage>, PropertyImageRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
