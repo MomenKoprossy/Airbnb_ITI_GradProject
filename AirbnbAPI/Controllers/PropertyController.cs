@@ -24,13 +24,13 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
-        public ActionResult<Property> PropertyById(int id)
+        public ActionResult<Property> PropertyById(string id)
         {
             Property p = _context.GetById(id);
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteProperty(int id)
+        public IActionResult DeleteProperty(string id)
         {
             _context.Delete(id);
             return Ok("deleted");

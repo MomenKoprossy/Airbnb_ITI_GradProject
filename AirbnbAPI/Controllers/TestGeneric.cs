@@ -12,7 +12,7 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class TestGeneric : ControllerBase
     {
         private readonly IRepository<User> _context;

@@ -19,37 +19,29 @@ namespace App.Repository
             PropertyEntity = context.Set<T>();
         }
        
-        public void Delete(object id)
-        {
-            throw new NotImplementedException();
-        }
+      
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             T Property = GetById(id);
             PropertyEntity.Remove(Property);
             context.SaveChanges();
         }
 
-        public void Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public IEnumerable<T> GetAll()
         {
             return PropertyEntity.AsEnumerable();
         }
 
-        public T GetById(int id)
-        {
-            return PropertyEntity.SingleOrDefault(s => s.PropertyId == id);
-        }
-
         public T GetById(string id)
         {
-            throw new NotImplementedException();
+            int ID = int.Parse(id);
+            return PropertyEntity.SingleOrDefault(s => s.PropertyId == ID);
         }
+
+        
 
         public void Insert(T obj)
         {
