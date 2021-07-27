@@ -19,7 +19,7 @@ namespace App.Repository
         {
             return PropertyEntity.AsEnumerable();
         }
-        public Property GetById(int id,string id2)
+        public Property GetById(int id, string id2)
         {
             return PropertyEntity.SingleOrDefault(s => s.PropertyId == id);
         }
@@ -30,13 +30,12 @@ namespace App.Repository
         }
         public void Update(Property obj)
         {
-            Property p = GetById(obj.PropertyId.Value,"");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
         public void Delete(int id, string id2)
         {
-            Property p = GetById(id,"");
+            Property p = GetById(id, "");
             PropertyEntity.Remove(p);
             Save();
         }

@@ -33,8 +33,7 @@ namespace App.Repository
         }
         public void Update(Wishlist obj)
         {
-            Wishlist p = GetById(obj.WishlistID.Value, "");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
         public void Delete(int id, string id2)

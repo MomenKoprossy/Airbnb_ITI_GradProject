@@ -22,7 +22,7 @@ namespace App.Repository
         {
             return AmenityEntity.AsEnumerable();
         }
-        public Amenity GetById(int id,string id2)
+        public Amenity GetById(int id, string id2)
         {
             return AmenityEntity.SingleOrDefault(s => s.AmenityId == id);
         }
@@ -33,13 +33,12 @@ namespace App.Repository
         }
         public void Update(Amenity obj)
         {
-            Amenity p = GetById(obj.AmenityId,"");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
-        public void Delete(int id,string id2)
+        public void Delete(int id, string id2)
         {
-            Amenity p = GetById(id,"");
+            Amenity p = GetById(id, "");
             AmenityEntity.Remove(p);
             Save();
         }

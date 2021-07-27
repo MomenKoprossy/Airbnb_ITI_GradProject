@@ -22,7 +22,7 @@ namespace App.Repository
         {
             return ReservationEntity.AsEnumerable();
         }
-        public Reservation GetById(int id,string id2)
+        public Reservation GetById(int id, string id2)
         {
             return ReservationEntity.SingleOrDefault(s => s.ReservationID == id);
         }
@@ -33,13 +33,12 @@ namespace App.Repository
         }
         public void Update(Reservation obj)
         {
-            Reservation p = GetById(obj.ReservationID.Value,"");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
-        public void Delete(int id,string id2)
+        public void Delete(int id, string id2)
         {
-            Reservation p = GetById(id,"");
+            Reservation p = GetById(id, "");
             ReservationEntity.Remove(p);
             Save();
         }

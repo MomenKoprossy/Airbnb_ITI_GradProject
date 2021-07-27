@@ -22,7 +22,7 @@ namespace App.Repository
         {
             return HostLanguageEntity.AsEnumerable();
         }
-        public HostLanguage GetById(int id,string id2)
+        public HostLanguage GetById(int id, string id2)
         {
             return HostLanguageEntity.SingleOrDefault(s => s.HostID == id2);
         }
@@ -33,13 +33,12 @@ namespace App.Repository
         }
         public void Update(HostLanguage obj)
         {
-            HostLanguage p = GetById(0,obj.HostID);
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
-        public void Delete(int id,string id2)
+        public void Delete(int id, string id2)
         {
-            HostLanguage p = GetById(0,id2);
+            HostLanguage p = GetById(0, id2);
             HostLanguageEntity.Remove(p);
             Save();
         }

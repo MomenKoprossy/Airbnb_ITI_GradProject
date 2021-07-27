@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-   public class PropertyReviewRepository : IRepository<PropertyReview>
+    public class PropertyReviewRepository : IRepository<PropertyReview>
     {
         private AirbnbModel context;
         private DbSet<PropertyReview> PropertyReviewEntity;
@@ -22,7 +22,7 @@ namespace App.Repository
         {
             return PropertyReviewEntity.AsEnumerable();
         }
-        public PropertyReview GetById(int id,string id2)
+        public PropertyReview GetById(int id, string id2)
         {
             return PropertyReviewEntity.SingleOrDefault(s => s.PropertyID == id);
         }
@@ -33,13 +33,12 @@ namespace App.Repository
         }
         public void Update(PropertyReview obj)
         {
-            PropertyReview p = GetById(obj.PropertyID,"");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
-        public void Delete(int id,string id2)
+        public void Delete(int id, string id2)
         {
-            PropertyReview p = GetById(id,"");
+            PropertyReview p = GetById(id, "");
             PropertyReviewEntity.Remove(p);
             Save();
         }

@@ -30,8 +30,7 @@ namespace App.Repository
         }
         public void Update(PropertyImage obj)
         {
-            PropertyImage p = GetById(obj.PropertyID, "");
-            context.Entry(p).State = EntityState.Modified;
+            context.Entry(obj).State = EntityState.Modified;
             Save();
         }
         public void Delete(int id, string id2)
