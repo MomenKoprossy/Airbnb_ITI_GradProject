@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ValidationAttributes\" />
+    <Compile Remove="ValidationAttributes\**" />
+    <EmbeddedResource Remove="ValidationAttributes\**" />
+    <None Remove="ValidationAttributes\**" />
   </ItemGroup>
 
   <ItemGroup>

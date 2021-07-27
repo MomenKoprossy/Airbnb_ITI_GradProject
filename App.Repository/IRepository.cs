@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace App.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T>
     {
         IEnumerable<T> GetAll();
-        T GetById(string id);
+        T GetById(int id);
         void Insert(T obj);
         void Update(T obj);
-        void Delete(string id);
+        void Delete(int id);
         void Save();
     }
 }
