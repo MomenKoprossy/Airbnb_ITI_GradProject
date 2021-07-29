@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirbnbAPI", "AirbnbAPI\Airb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Repository", "App.Repository\App.Repository.csproj", "{2D6D6DB1-715C-453C-B5EA-05376366E7D1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{E47200B3-6817-44BC-8F2F-48053ECC0CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2D6D6DB1-715C-453C-B5EA-05376366E7D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D6D6DB1-715C-453C-B5EA-05376366E7D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D6D6DB1-715C-453C-B5EA-05376366E7D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47200B3-6817-44BC-8F2F-48053ECC0CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47200B3-6817-44BC-8F2F-48053ECC0CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47200B3-6817-44BC-8F2F-48053ECC0CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47200B3-6817-44BC-8F2F-48053ECC0CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

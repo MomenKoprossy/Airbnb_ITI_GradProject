@@ -1,6 +1,8 @@
+using AirbnbAPI.Models;
 using App.Repository;
 using Data.Model;
 using DataEF;
+using EmailService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,8 +39,8 @@ namespace AirbnbAPI
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DataEF"));
             });
-            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<AirbnbModel>();
-
+            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<AirbnbModel>().AddDefaultTokenProviders();
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
             //jwt
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
             services.AddAuthentication(options =>
@@ -70,7 +72,11 @@ namespace AirbnbAPI
             services.AddScoped<IRepository<HostLanguage>, HostLanguageRepository>();
             services.AddScoped<IRepository<Wishlist>, WishlistRepository>();
             services.AddScoped<IRepository<PropertyImage>, PropertyImageRepository>();
-
+            var emailConfig = Configuration
+            .GetSection("EmailConfiguration")
+            .Get<EmailModel>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

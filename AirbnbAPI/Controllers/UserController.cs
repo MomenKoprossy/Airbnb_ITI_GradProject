@@ -1,5 +1,6 @@
 ﻿using AirbnbAPI.Models;
 using Data.Model;
+using EmailService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,17 @@ namespace AirbnbAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserTestController : ControllerBase
+    public class UserController : ControllerBase
     {
         private UserManager<User> UserManager;
         private SignInManager<User> SignInManager;
+        private IEmailSender EmailSender;
 
-        public UserTestController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            EmailSender = emailSender;
         }
 
         [HttpPost]
@@ -43,6 +46,7 @@ namespace AirbnbAPI.Controllers
                 City = model.City,
                 Country = model.Country,
                 Street = model.Street,
+                Email = model.Email
             };
 
             try
@@ -88,6 +92,39 @@ namespace AirbnbAPI.Controllers
         public async Task<IActionResult> Logout()
         {
             await SignInManager.SignOutAsync();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = await UserManager.FindByEmailAsync(forgotPasswordModel.Email);
+            if (user == null)
+                return NotFound();
+            var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+            var mail = new Message(new string[] { user.Email }, "Reset Password Token", "Password reset Token is: " + token);
+            await EmailSender.SendEmailAsync(mail);
+            return Ok();
+        }
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid data");
+            }
+            var user = await UserManager.FindByEmailAsync(resetPasswordModel.Email);
+            if (user == null)
+                return NotFound();
+            var resetPass = await UserManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+            if (!resetPass.Succeeded)
+                return BadRequest("this bad request");
             return Ok();
         }
     }
