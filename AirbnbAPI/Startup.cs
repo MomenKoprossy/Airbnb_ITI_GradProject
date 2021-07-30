@@ -94,7 +94,7 @@ namespace AirbnbAPI
             }
 
             app.UseAuthentication();
-            app.UseCors();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             //open api
             app.UseSwagger();
             app.UseSwaggerUI(options =>

@@ -12,7 +12,8 @@ namespace AirbnbAPI.Models
         public string Password { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
-        public DateTime Dob { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string PhoneNumber { get; set; }
         public string Image { get; set; }
         public string Gender { get; set; }
         public string City { get; set; }

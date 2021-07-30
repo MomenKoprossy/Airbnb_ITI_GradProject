@@ -17,23 +17,18 @@ namespace Data.Model
         public string Fname { get; set; }
         [Required]
         public string Lname { get; set; }
-        [Required]
-        //public int Phone { get; set; }
-        [Column(TypeName = "Date")]
-        public DateTime? DOB { get; set; }
+        [Column(name:"DOB",TypeName = "Date")]
+        public DateTime? BirthDate { get; set; }
         //[EmailAddress, Required]
         //public string Email { get; set; }
         //public string Password { get; set; }
         //public bool Verified { get; set; }
-        [Required]
         public string Image { get; set; }
-        [Required]
         public string Gender { get; set; }
         [Required]
         public string Country { get; set; }
         [Required]
         public string City { get; set; }
-        [Required]
         public string Street { get; set; }
         public int? Zipcode { get; set; }
 
