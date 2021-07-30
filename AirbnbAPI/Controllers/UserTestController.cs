@@ -29,26 +29,29 @@ namespace AirbnbAPI.Controllers
 
         [HttpPost]
         [Route("Register")]
-        //POST : /api/ApplicationUser/Register
+        //POST : /api/UserTest/Register
         public async Task<IActionResult> PostApplicationUser(RegisterUser model)
         {
             var applicationUser = new User()
             {
-                UserName = model.UserName,
                 Fname = model.Fname,
                 Lname = model.Lname,
-                DOB = model.Dob,
-                Image = model.Image,
-                Gender = model.Gender,
-                City = model.City,
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
                 Country = model.Country,
-                Street = model.Street,
+                City = model.City
+                //BirthDate = model.BirthDate,
+                //Image = model.Image,
+                //Gender = model.Gender,
+,
+                //Street = model.Street,
             };
 
             try
             {
                 var result = await UserManager.CreateAsync(applicationUser, model.Password);
-                return Ok(result);
+                return Ok(result); 
             }
             catch (Exception ex)
             {
@@ -59,10 +62,10 @@ namespace AirbnbAPI.Controllers
 
         [HttpPost]
         [Route("Login")]
-        //POST : /api/ApplicationUser/Login
+        //POST : /api/UserTest/Login
         public async Task<IActionResult> Login(LoginUser model)
         {
-            var user = await UserManager.FindByNameAsync(model.UserName);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user != null && await UserManager.CheckPasswordAsync(user, model.Password))
             {
                 var tokenDescriptor = new SecurityTokenDescriptor

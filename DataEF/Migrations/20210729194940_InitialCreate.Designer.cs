@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataEF.Migrations
 {
     [DbContext(typeof(AirbnbModel))]
-    [Migration("20210727001329_test")]
-    partial class test
+    [Migration("20210729194940_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
