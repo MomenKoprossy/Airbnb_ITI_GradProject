@@ -60,7 +60,7 @@ namespace AirbnbAPI
                 };
             });
 
-
+            services.AddHttpContextAccessor();
             services.AddCors();
             services.AddRazorPages();
             services.AddControllers();

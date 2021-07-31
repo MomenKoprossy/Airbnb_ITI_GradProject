@@ -17,7 +17,7 @@ namespace Data.Model
         public string Fname { get; set; }
         [Required]
         public string Lname { get; set; }
-        [Column(name:"DOB",TypeName = "Date")]
+        [Column(name: "DOB", TypeName = "Date")]
         public DateTime? BirthDate { get; set; }
         //[EmailAddress, Required]
         //public string Email { get; set; }

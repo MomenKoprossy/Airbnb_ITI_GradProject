@@ -1,6 +1,7 @@
 ﻿using AirbnbAPI.Models;
 using Data.Model;
 using EmailService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +23,14 @@ namespace AirbnbAPI.Controllers
         private UserManager<User> UserManager;
         private SignInManager<User> SignInManager;
         private IEmailSender EmailSender;
+        private IHttpContextAccessor HttpContextAccessor;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             EmailSender = emailSender;
+            HttpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
@@ -53,7 +56,7 @@ namespace AirbnbAPI.Controllers
             try
             {
                 var result = await UserManager.CreateAsync(applicationUser, model.Password);
-                return Ok(result); 
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -74,7 +77,7 @@ namespace AirbnbAPI.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserID",user.Id.ToString())
+                        new Claim("sub",user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456")), SecurityAlgorithms.HmacSha256Signature)
@@ -118,14 +121,24 @@ namespace AirbnbAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("invalid data");
+                return BadRequest("Invalid data");
             }
             var user = await UserManager.FindByEmailAsync(resetPasswordModel.Email);
             if (user == null)
                 return NotFound();
             var resetPass = await UserManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
             if (!resetPass.Succeeded)
-                return BadRequest("this bad request");
+                return BadRequest();
+            return Ok();
+        }
+        [HttpPost]
+        [Route("ChangePassword")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
+        {
+            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManager.FindByIdAsync(uid);
+            await UserManager.ChangePasswordAsync(user, changePasswordModel.CurrPassword, changePasswordModel.NewPassword);
             return Ok();
         }
     }
