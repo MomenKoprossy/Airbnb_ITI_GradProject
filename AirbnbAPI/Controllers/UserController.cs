@@ -150,5 +150,27 @@ namespace AirbnbAPI.Controllers
             var user = await UserManager.FindByIdAsync(uid);
             return Ok(user);
         }
+        [HttpPut]
+        [Route("UserDetails")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(User model)
+        {
+            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManager.FindByIdAsync(uid);
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+            user.Fname = model.Fname;
+            user.Lname = model.Lname;
+            user.Image = model.Image;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Street = model.Street;
+            user.Zipcode = model.Zipcode;
+            user.Gender = model.Gender;
+            user.Country = model.Country;
+            user.City = model.City;
+            user.BirthDate = model.BirthDate;
+            await UserManager.UpdateAsync(user);
+            return Ok("User Updated");
+        }
     }
 }
