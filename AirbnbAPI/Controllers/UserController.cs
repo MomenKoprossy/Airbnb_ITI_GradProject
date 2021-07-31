@@ -151,7 +151,7 @@ namespace AirbnbAPI.Controllers
             return Ok(user);
         }
         [HttpPut]
-        [Route("UserDetails")]
+        [Route("UpdateUser")]
         [Authorize]
         public async Task<IActionResult> UpdateUser(User model)
         {

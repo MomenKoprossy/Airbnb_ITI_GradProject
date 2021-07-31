@@ -24,14 +24,13 @@ namespace AirbnbAPI.Controllers
         {
             return Ok(_context.GetAll());
         }
-        [HttpGet("{id}")]
         //public ActionResult<Reservation> ReservationById()
         //{
         //    var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         //    return Ok(_context.GetUserReservations(uid));
         //}
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult<Reservation> ReservationById(int id)
         {
             Reservation p = _context.GetById(id, "");
