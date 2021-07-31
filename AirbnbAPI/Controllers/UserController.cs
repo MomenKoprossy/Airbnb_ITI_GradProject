@@ -153,22 +153,24 @@ namespace AirbnbAPI.Controllers
         [HttpPut]
         [Route("UpdateUser")]
         [Authorize]
-        public async Task<ActionResult> UpdateUser(User model)
+        public async Task<ActionResult> UpdateUser(UpdateUserModel model)
         {
             var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManager.FindByIdAsync(uid);
-            user.Email = model.Email;
-            user.UserName = model.UserName;
-            user.Fname = model.Fname;
-            user.Lname = model.Lname;
-            user.Image = model.Image;
-            user.PhoneNumber = model.PhoneNumber;
-            user.Street = model.Street;
-            user.Zipcode = model.Zipcode;
-            user.Gender = model.Gender;
-            user.Country = model.Country;
-            user.City = model.City;
-            user.BirthDate = model.BirthDate;
+            if (model.Fname != "")
+                user.Fname = model.Fname;
+            if (model.Lname != "")
+                user.Lname = model.Lname;
+            if (model.PhoneNumber != "")
+                user.PhoneNumber = model.PhoneNumber;
+            if (model.Street != "")
+                user.Street = model.Street;
+            if (model.Zipcode != 0)
+                user.Zipcode = model.Zipcode;
+            if (model.Country != "")
+                user.Country = model.Country;
+            if (model.City != "")
+                user.City = model.City;
             await UserManager.UpdateAsync(user);
             return Ok("User Updated");
         }
