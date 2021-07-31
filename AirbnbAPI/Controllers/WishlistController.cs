@@ -41,7 +41,7 @@ namespace AirbnbAPI.Controllers
         {
 
             _context.Insert(Wishlist);
-            return Ok("Wishlist Adeed");
+            return Ok("Wishlist Added");
         }
 
         [HttpPut]

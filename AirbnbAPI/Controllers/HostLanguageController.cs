@@ -26,13 +26,13 @@ namespace AirbnbAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<HostLanguage> HostLanguageById(string id)
         {
-            HostLanguage p = _context.GetById(0,id);
+            HostLanguage p = _context.GetById(0, id);
             return p;
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteHostLanguage(string id)
         {
-            _context.Delete(0,id);
+            _context.Delete(0, id);
             return Ok("deleted");
         }
         [HttpPost]
@@ -41,7 +41,7 @@ namespace AirbnbAPI.Controllers
         {
 
             _context.Insert(HostLanguage);
-            return Ok("HostLanguage Adeed");
+            return Ok("HostLanguage Added");
         }
 
         [HttpPut]

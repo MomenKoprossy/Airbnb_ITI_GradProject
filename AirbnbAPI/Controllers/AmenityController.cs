@@ -26,13 +26,13 @@ namespace AirbnbAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Amenity> AmenityById(int id)
         {
-            Amenity p = _context.GetById(id,"");
+            Amenity p = _context.GetById(id, "");
             return p;
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteAmenity(int id)
         {
-            _context.Delete(id,"");
+            _context.Delete(id, "");
             return Ok("deleted");
         }
         [HttpPost]
@@ -41,7 +41,7 @@ namespace AirbnbAPI.Controllers
         {
 
             _context.Insert(Amenity);
-            return Ok("Amenity Adeed");
+            return Ok("Amenity Added");
         }
 
         [HttpPut]

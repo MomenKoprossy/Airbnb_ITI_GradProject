@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AirbnbAPI.Controllers
@@ -24,15 +25,22 @@ namespace AirbnbAPI.Controllers
             return Ok(_context.GetAll());
         }
         [HttpGet("{id}")]
+        //public ActionResult<Reservation> ReservationById()
+        //{
+        //    var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    return Ok(_context.GetUserReservations(uid));
+        //}
+        [HttpGet]
         public ActionResult<Reservation> ReservationById(int id)
         {
-            Reservation p = _context.GetById(id,"");
+            Reservation p = _context.GetById(id, "");
             return p;
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteReservation(int id)
         {
-            _context.Delete(id,"");
+            _context.Delete(id, "");
             return Ok("deleted");
         }
         [HttpPost]
@@ -41,7 +49,7 @@ namespace AirbnbAPI.Controllers
         {
 
             _context.Insert(Reservation);
-            return Ok("Reservation Adeed");
+            return Ok("Reservation Added");
         }
 
         [HttpPut]

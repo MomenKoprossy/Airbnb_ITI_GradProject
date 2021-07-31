@@ -26,6 +26,11 @@ namespace App.Repository
         {
             return ReservationEntity.SingleOrDefault(s => s.ReservationID == id);
         }
+        public IEnumerable<Reservation> GetUserReservations(string id)
+        {
+            return ReservationEntity.Where(x => x.UserID == id).AsEnumerable();
+
+        }
         public void Insert(Reservation obj)
         {
             context.Entry(obj).State = EntityState.Added;

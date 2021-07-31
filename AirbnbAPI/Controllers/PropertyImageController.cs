@@ -41,7 +41,7 @@ namespace AirbnbAPI.Controllers
         {
 
             _context.Insert(PropertyImage);
-            return Ok("PropertyImage Adeed");
+            return Ok("PropertyImage Added");
         }
 
         [HttpPut]

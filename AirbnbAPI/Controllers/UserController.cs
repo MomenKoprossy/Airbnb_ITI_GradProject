@@ -141,5 +141,14 @@ namespace AirbnbAPI.Controllers
             await UserManager.ChangePasswordAsync(user, changePasswordModel.CurrPassword, changePasswordModel.NewPassword);
             return Ok();
         }
+        [HttpGet]
+        [Route("UserDetails")]
+        [Authorize]
+        public async Task<IActionResult> GetUserDetails()
+        {
+            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManager.FindByIdAsync(uid);
+            return Ok(user);
+        }
     }
 }
