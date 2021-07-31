@@ -1,3 +1,4 @@
+using AirbnbAPI.ActionFilters;
 using AirbnbAPI.Models;
 using App.Repository;
 using Data.Model;
@@ -72,6 +73,7 @@ namespace AirbnbAPI
             services.AddScoped<IRepository<HostLanguage>, HostLanguageRepository>();
             services.AddScoped<IRepository<Wishlist>, WishlistRepository>();
             services.AddScoped<IRepository<PropertyImage>, PropertyImageRepository>();
+            services.AddScoped<EnsureReservationAvailablity>();
             var emailConfig = Configuration
             .GetSection("EmailConfiguration")
             .Get<EmailModel>();
