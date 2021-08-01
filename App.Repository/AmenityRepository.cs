@@ -18,33 +18,39 @@ namespace App.Repository
             this.context = context;
             AmenityEntity = context.Set<Amenity>();
         }
-        public IEnumerable<Amenity> GetAll()
-        {
-            return AmenityEntity.AsEnumerable();
-        }
-        public Amenity GetById(int id, string id2)
-        {
-            return AmenityEntity.SingleOrDefault(s => s.AmenityId == id);
-        }
-        public void Insert(Amenity obj)
+       
+       
+        public async void Insert(Amenity obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(Amenity obj)
+        public async void Update(Amenity obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            Amenity p = GetById(id, "");
+            Amenity p = await GetByIdAsync(id, "");
             AmenityEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Save()
+       
+
+        public async Task<IEnumerable<Amenity>> GetAllAsync()
         {
-            context.SaveChanges();
+            return await AmenityEntity.ToListAsync();
+        }
+
+        public async Task<Amenity> GetByIdAsync(int id, string id2)
+        {
+            return await AmenityEntity.SingleOrDefaultAsync(s => s.AmenityId == id);
+        }
+
+        public Task<IEnumerable<Amenity>> GetUserReservations(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

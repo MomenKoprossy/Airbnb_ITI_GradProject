@@ -18,33 +18,39 @@ namespace App.Repository
             this.context = context;
             WishlistEntity = context.Set<Wishlist>();
         }
-        public IEnumerable<Wishlist> GetAll()
-        {
-            return WishlistEntity.AsEnumerable();
-        }
-        public Wishlist GetById(int id, string id2)
-        {
-            return WishlistEntity.SingleOrDefault(s => s.WishlistID == id);
-        }
-        public void Insert(Wishlist obj)
+       
+        
+        public async void Insert(Wishlist obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(Wishlist obj)
+        public async void Update(Wishlist obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            Wishlist p = GetById(id, "");
+            Wishlist p = await GetByIdAsync(id, "");
             WishlistEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Save()
+     
+
+        public async Task<IEnumerable<Wishlist>> GetAllAsync()
         {
-            context.SaveChanges();
+            return await WishlistEntity.ToListAsync();
+        }
+
+        public async Task<Wishlist> GetByIdAsync(int id, string id2)
+        {
+            return await WishlistEntity.SingleOrDefaultAsync(s => s.WishlistID == id);
+        }
+
+        public Task<IEnumerable<Wishlist>> GetUserReservations(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

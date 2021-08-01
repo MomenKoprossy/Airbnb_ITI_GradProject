@@ -18,38 +18,39 @@ namespace App.Repository
             this.context = context;
             ReservationEntity = context.Set<Reservation>();
         }
-        public IEnumerable<Reservation> GetAll()
+       
+       
+        public async Task<IEnumerable<Reservation>> GetUserReservations(string id)
         {
-            return ReservationEntity.AsEnumerable();
-        }
-        public Reservation GetById(int id, string id2)
-        {
-            return ReservationEntity.SingleOrDefault(s => s.ReservationID == id);
-        }
-        public IEnumerable<Reservation> GetUserReservations(string id)
-        {
-            return ReservationEntity.Where(x => x.UserID == id).AsEnumerable();
+            return await ReservationEntity.Where(x => x.UserID == id).ToListAsync();
 
         }
-        public void Insert(Reservation obj)
+        public async void Insert(Reservation obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(Reservation obj)
+        public async void Update(Reservation obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            Reservation p = GetById(id, "");
+            Reservation p = await GetByIdAsync(id, "");
             ReservationEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Save()
+       
+
+        public async Task<IEnumerable<Reservation>> GetAllAsync()
         {
-            context.SaveChanges();
+            return await ReservationEntity.ToListAsync();
+        }
+
+        public async Task<Reservation> GetByIdAsync(int id, string id2)
+        {
+            return await ReservationEntity.SingleOrDefaultAsync(s => s.ReservationID == id);
         }
     }
 }

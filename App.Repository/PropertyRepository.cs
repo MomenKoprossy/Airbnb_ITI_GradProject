@@ -3,6 +3,7 @@ using DataEF;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace App.Repository
 {
@@ -15,33 +16,36 @@ namespace App.Repository
             this.context = context;
             PropertyEntity = context.Set<Property>();
         }
-        public IEnumerable<Property> GetAll()
+        public async Task<IEnumerable<Property>> GetAllAsync()
         {
-            return PropertyEntity.AsEnumerable();
+            return await PropertyEntity.ToListAsync();
         }
-        public Property GetById(int id, string id2)
+      
+        public async Task<Property> GetByIdAsync(int id, string id2)
         {
-            return PropertyEntity.SingleOrDefault(s => s.PropertyId == id);
+            return await PropertyEntity.SingleOrDefaultAsync(s => s.PropertyId == id);
         }
-        public void Insert(Property obj)
+       
+        public async void Insert(Property obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(Property obj)
+        public async void Update(Property obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            Property p = GetById(id, "");
+            Property p = await GetByIdAsync(id, "");
             PropertyEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Save()
+
+        public Task<IEnumerable<Property>> GetUserReservations(string id)
         {
-            context.SaveChanges();
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -19,14 +19,14 @@ namespace AirbnbAPI.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult getall()
+        public async Task<IActionResult> getall()
         {
-            return Ok(_context.GetAll());
+            return Ok(await _context.GetAllAsync());
         }
         [HttpGet("{id}")]
-        public ActionResult<Amenity> AmenityById(int id)
+        public async Task<ActionResult<Amenity>> AmenityById(int id)
         {
-            Amenity p = _context.GetById(id, "");
+            Amenity p = await _context.GetByIdAsync(id, "");
             return p;
         }
         [HttpDelete("{id}")]
@@ -34,6 +34,7 @@ namespace AirbnbAPI.Controllers
         {
             _context.Delete(id, "");
             return Ok("deleted");
+
         }
         [HttpPost]
 

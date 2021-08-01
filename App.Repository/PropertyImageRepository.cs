@@ -3,6 +3,7 @@ using DataEF;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace App.Repository
 {
@@ -15,33 +16,48 @@ namespace App.Repository
             this.context = context;
             PropertyImageEntity = context.Set<PropertyImage>();
         }
+
+        public async Task<IEnumerable<PropertyImage>> GetAllAsync()
+        {
+            return await PropertyImageEntity.ToListAsync();
+        }
         public IEnumerable<PropertyImage> GetAll()
         {
             return PropertyImageEntity.AsEnumerable();
         }
-        public PropertyImage GetById(int id, string id2)
+        public async Task<PropertyImage> GetByIdAsync(int id, string id2)
         {
-            return PropertyImageEntity.SingleOrDefault(s => s.PropertyID == id);
+            return await PropertyImageEntity.SingleOrDefaultAsync(s => s.PropertyID == id);
         }
-        public void Insert(PropertyImage obj)
+        public async void Insert(PropertyImage obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(PropertyImage obj)
+        public async void Update(PropertyImage obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            PropertyImage p = GetById(id, "");
+            PropertyImage p = await GetByIdAsync(id, "");
             PropertyImageEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Save()
+        public async void Save()
         {
-            context.SaveChanges();
+           await  context.SaveChangesAsync();
+        }
+
+        public PropertyImage GetById(int id, string id2)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<PropertyImage>> GetUserReservations(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

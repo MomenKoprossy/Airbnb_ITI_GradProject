@@ -18,33 +18,42 @@ namespace App.Repository
             this.context = context;
             HostLanguageEntity = context.Set<HostLanguage>();
         }
-        public IEnumerable<HostLanguage> GetAll()
-        {
-            return HostLanguageEntity.AsEnumerable();
-        }
-        public HostLanguage GetById(int id, string id2)
-        {
-            return HostLanguageEntity.SingleOrDefault(s => s.HostID == id2);
-        }
-        public void Insert(HostLanguage obj)
+       
+       
+        public async void Insert(HostLanguage obj)
         {
             context.Entry(obj).State = EntityState.Added;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Update(HostLanguage obj)
+        public async void Update(HostLanguage obj)
         {
             context.Entry(obj).State = EntityState.Modified;
-            Save();
+            await context.SaveChangesAsync();
         }
-        public void Delete(int id, string id2)
+        public async void Delete(int id, string id2)
         {
-            HostLanguage p = GetById(0, id2);
+            HostLanguage p = await GetByIdAsync(0, id2);
             HostLanguageEntity.Remove(p);
-            Save();
+            await context.SaveChangesAsync();
         }
         public void Save()
         {
             context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<HostLanguage>> GetAllAsync()
+        {
+            return await HostLanguageEntity.ToListAsync();
+        }
+
+        public async Task<HostLanguage> GetByIdAsync(int id, string id2)
+        {
+            return await HostLanguageEntity.SingleOrDefaultAsync(s => s.HostID == id2);
+        }
+
+        public Task<IEnumerable<HostLanguage>> GetUserReservations(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
