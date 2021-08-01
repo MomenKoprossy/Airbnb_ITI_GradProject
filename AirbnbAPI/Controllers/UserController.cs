@@ -36,7 +36,7 @@ namespace AirbnbAPI.Controllers
         [HttpPost]
         [Route("Register")]
         //POST : /api/User/Register
-        public async Task<IActionResult> PostApplicationUser(RegisterUser model)
+        public async Task<ActionResult> PostApplicationUser(RegisterUser model)
         {
             var applicationUser = new User()
             {
@@ -68,7 +68,7 @@ namespace AirbnbAPI.Controllers
         [HttpPost]
         [Route("Login")]
         //POST : /api/User/Login
-        public async Task<IActionResult> Login(LoginUser model)
+        public async Task<ActionResult> Login(LoginUser model)
         {
             var user = await UserManager.FindByEmailAsync(model.Email);
             if (user != null && await UserManager.CheckPasswordAsync(user, model.Password))
@@ -93,7 +93,7 @@ namespace AirbnbAPI.Controllers
 
         [HttpPost]
         [Route("Logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<ActionResult> Logout()
         {
             await SignInManager.SignOutAsync();
             return Ok();
@@ -101,7 +101,7 @@ namespace AirbnbAPI.Controllers
 
         [HttpPost]
         [Route("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             if (!ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace AirbnbAPI.Controllers
         }
         [HttpPost]
         [Route("ResetPassword")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+        public async Task<ActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             if (!ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace AirbnbAPI.Controllers
         [HttpPost]
         [Route("ChangePassword")]
         [Authorize]
-        public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
             var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManager.FindByIdAsync(uid);
@@ -144,7 +144,7 @@ namespace AirbnbAPI.Controllers
         [HttpGet]
         [Route("UserDetails")]
         [Authorize]
-        public async Task<IActionResult> GetUserDetails()
+        public async Task<ActionResult> GetUserDetails()
         {
             var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManager.FindByIdAsync(uid);
@@ -153,22 +153,24 @@ namespace AirbnbAPI.Controllers
         [HttpPut]
         [Route("UpdateUser")]
         [Authorize]
-        public async Task<IActionResult> UpdateUser(User model)
+        public async Task<ActionResult> UpdateUser(UpdateUserModel model)
         {
             var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManager.FindByIdAsync(uid);
-            user.Email = model.Email;
-            user.UserName = model.UserName;
-            user.Fname = model.Fname;
-            user.Lname = model.Lname;
-            user.Image = model.Image;
-            user.PhoneNumber = model.PhoneNumber;
-            user.Street = model.Street;
-            user.Zipcode = model.Zipcode;
-            user.Gender = model.Gender;
-            user.Country = model.Country;
-            user.City = model.City;
-            user.BirthDate = model.BirthDate;
+            if (model.Fname != "")
+                user.Fname = model.Fname;
+            if (model.Lname != "")
+                user.Lname = model.Lname;
+            if (model.PhoneNumber != "")
+                user.PhoneNumber = model.PhoneNumber;
+            if (model.Street != "")
+                user.Street = model.Street;
+            if (model.Zipcode != 0)
+                user.Zipcode = model.Zipcode;
+            if (model.Country != "")
+                user.Country = model.Country;
+            if (model.City != "")
+                user.City = model.City;
             await UserManager.UpdateAsync(user);
             return Ok("User Updated");
         }
