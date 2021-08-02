@@ -19,35 +19,35 @@ namespace AirbnbAPI.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> getall()
+        public async Task<ActionResult> getall()
         {
-            return  Ok(await _context.GetAllAsync());
+            return Ok(await _context.GetAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<HostLanguage>> HostLanguageById(string id)
         {
-            HostLanguage p =  await _context.GetByIdAsync(0, id);
+            HostLanguage p = await _context.GetByIdAsync(0, id);
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteHostLanguage(string id)
+        public async Task<ActionResult> DeleteHostLanguage(string id)
         {
-            _context.Delete(0, id);
+            await _context.DeleteAsync(0, id);
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddHostLanguage(HostLanguage HostLanguage)
+        public async Task<ActionResult> AddHostLanguage(HostLanguage HostLanguage)
         {
 
-            _context.Insert(HostLanguage);
-            return Ok("HostLanguage Added");
+            var x = await _context.InsertAsync(HostLanguage);
+            return Ok(x);
         }
 
         [HttpPut]
-        public IActionResult UpdateHostLanguage(HostLanguage HostLanguage)
+        public async Task<ActionResult> UpdateHostLanguage(HostLanguage HostLanguage)
         {
-            _context.Update(HostLanguage);
+            await _context.UpdateAsync(HostLanguage);
             return Ok("HostLanguage Updated");
         }
 

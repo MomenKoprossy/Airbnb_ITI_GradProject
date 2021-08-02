@@ -18,37 +18,32 @@ namespace App.Repository
             this.context = context;
             WishlistEntity = context.Set<Wishlist>();
         }
-       
-        
-        public async void Insert(Wishlist obj)
+        public async Task<int> InsertAsync(Wishlist obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
+            return obj.WishlistID;
         }
-        public async void Update(Wishlist obj)
+        public async Task UpdateAsync(Wishlist obj)
         {
             context.Entry(obj).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
-        public async void Delete(int id, string id2)
+        public async Task DeleteAsync(int id, string id2)
         {
             Wishlist p = await GetByIdAsync(id, "");
             WishlistEntity.Remove(p);
             await context.SaveChangesAsync();
         }
-     
-
         public async Task<IEnumerable<Wishlist>> GetAllAsync()
         {
             return await WishlistEntity.ToListAsync();
         }
-
         public async Task<Wishlist> GetByIdAsync(int id, string id2)
         {
             return await WishlistEntity.SingleOrDefaultAsync(s => s.WishlistID == id);
         }
-
-        public Task<IEnumerable<Wishlist>> GetUserReservations(string id)
+        public Task<IEnumerable<Wishlist>> GetUserReservationsAsync(string id)
         {
             throw new NotImplementedException();
         }

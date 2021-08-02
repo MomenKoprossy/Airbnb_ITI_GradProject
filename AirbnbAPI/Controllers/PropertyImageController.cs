@@ -21,7 +21,7 @@ namespace AirbnbAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> getall()
         {
-            return  Ok(await  _context.GetAllAsync());
+            return Ok(await _context.GetAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<PropertyImage>> PropertyImageById(int id)
@@ -30,24 +30,23 @@ namespace AirbnbAPI.Controllers
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeletePropertyImage(int id)
+        public async Task<ActionResult> DeletePropertyImage(int id)
         {
-            _context.Delete(id, "");
+            await _context.DeleteAsync(id, "");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddPropertyImage(PropertyImage PropertyImage)
+        public async Task<ActionResult> AddPropertyImage(PropertyImage PropertyImage)
         {
-
-            _context.Insert(PropertyImage);
-            return Ok("PropertyImage Added");
+            var x = await _context.InsertAsync(PropertyImage);
+            return Ok(x);
         }
 
         [HttpPut]
-        public IActionResult UpdatePropertyImage(PropertyImage PropertyImage)
+        public async Task<ActionResult> UpdatePropertyImage(PropertyImage PropertyImage)
         {
-            _context.Update(PropertyImage);
+            await _context.UpdateAsync(PropertyImage);
             return Ok("PropertyImage Updated");
         }
 

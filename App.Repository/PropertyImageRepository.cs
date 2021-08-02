@@ -21,41 +21,28 @@ namespace App.Repository
         {
             return await PropertyImageEntity.ToListAsync();
         }
-        public IEnumerable<PropertyImage> GetAll()
-        {
-            return PropertyImageEntity.AsEnumerable();
-        }
         public async Task<PropertyImage> GetByIdAsync(int id, string id2)
         {
             return await PropertyImageEntity.SingleOrDefaultAsync(s => s.PropertyID == id);
         }
-        public async void Insert(PropertyImage obj)
+        public async Task<int> InsertAsync(PropertyImage obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
+            return (obj.PropertyID);
         }
-        public async void Update(PropertyImage obj)
+        public async Task UpdateAsync(PropertyImage obj)
         {
             context.Entry(obj).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
-        public async void Delete(int id, string id2)
+        public async Task DeleteAsync(int id, string id2)
         {
             PropertyImage p = await GetByIdAsync(id, "");
             PropertyImageEntity.Remove(p);
             await context.SaveChangesAsync();
         }
-        public async void Save()
-        {
-           await  context.SaveChangesAsync();
-        }
-
-        public PropertyImage GetById(int id, string id2)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<PropertyImage>> GetUserReservations(string id)
+        public Task<IEnumerable<PropertyImage>> GetUserReservationsAsync(string id)
         {
             throw new System.NotImplementedException();
         }

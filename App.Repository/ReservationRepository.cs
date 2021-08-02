@@ -18,31 +18,27 @@ namespace App.Repository
             this.context = context;
             ReservationEntity = context.Set<Reservation>();
         }
-       
-       
-        public async Task<IEnumerable<Reservation>> GetUserReservations(string id)
+        public async Task<IEnumerable<Reservation>> GetUserReservationsAsync(string id)
         {
             return await ReservationEntity.Where(x => x.UserID == id).ToListAsync();
-
         }
-        public async void Insert(Reservation obj)
+        public async Task<int> InsertAsync(Reservation obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
+            return obj.ReservationID;
         }
-        public async void Update(Reservation obj)
+        public async Task UpdateAsync(Reservation obj)
         {
             context.Entry(obj).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
-        public async void Delete(int id, string id2)
+        public async Task DeleteAsync(int id, string id2)
         {
             Reservation p = await GetByIdAsync(id, "");
             ReservationEntity.Remove(p);
             await context.SaveChangesAsync();
         }
-       
-
         public async Task<IEnumerable<Reservation>> GetAllAsync()
         {
             return await ReservationEntity.ToListAsync();

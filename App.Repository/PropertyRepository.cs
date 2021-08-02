@@ -20,30 +20,30 @@ namespace App.Repository
         {
             return await PropertyEntity.ToListAsync();
         }
-      
+
         public async Task<Property> GetByIdAsync(int id, string id2)
         {
             return await PropertyEntity.SingleOrDefaultAsync(s => s.PropertyId == id);
         }
-       
-        public async void Insert(Property obj)
+
+        public async Task<int> InsertAsync(Property obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
+            return obj.PropertyId;
         }
-        public async void Update(Property obj)
+        public async Task UpdateAsync(Property obj)
         {
             context.Entry(obj).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
-        public async void Delete(int id, string id2)
+        public async Task DeleteAsync(int id, string id2)
         {
             Property p = await GetByIdAsync(id, "");
             PropertyEntity.Remove(p);
             await context.SaveChangesAsync();
         }
-
-        public Task<IEnumerable<Property>> GetUserReservations(string id)
+        public Task<IEnumerable<Property>> GetUserReservationsAsync(string id)
         {
             throw new System.NotImplementedException();
         }

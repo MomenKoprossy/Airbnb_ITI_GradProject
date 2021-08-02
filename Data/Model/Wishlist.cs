@@ -11,7 +11,7 @@ namespace Data.Model
     public class Wishlist
     {
         [Key]
-        public int? WishlistID { get; set; }
+        public int WishlistID { get; set; }
         [Required]
         public string WishlistTitle { get; set; }
         [ForeignKey("User")]

@@ -11,7 +11,7 @@ namespace Data.Model
     public class Reservation
     {
         [Key]
-        public int? ReservationID { get; set; }
+        public int ReservationID { get; set; }
         [ForeignKey("Property")]
         public int PropertyID { get; set; }
         [ForeignKey("User")]

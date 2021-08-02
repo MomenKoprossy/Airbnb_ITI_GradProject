@@ -24,12 +24,6 @@ namespace AirbnbAPI.Controllers
         {
             return Ok(await _context.GetAllAsync());
         }
-        //public ActionResult<Reservation> ReservationById()
-        //{
-        //    var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    return Ok(_context.GetUserReservations(uid));
-        //}
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> ReservationById(int id)
         {
@@ -37,24 +31,24 @@ namespace AirbnbAPI.Controllers
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteReservation(int id)
+        public async Task<ActionResult> DeleteReservation(int id)
         {
-            _context.Delete(id, "");
+            await _context.DeleteAsync(id, "");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddReservation(Reservation Reservation)
+        public async Task<ActionResult> AddReservation(Reservation Reservation)
         {
 
-            _context.Insert(Reservation);
-            return Ok("Reservation Added");
+            var x = await _context.InsertAsync(Reservation);
+            return Ok(x);
         }
 
         [HttpPut]
-        public IActionResult UpdateReservation(Reservation Reservation)
+        public async Task<ActionResult> UpdateReservation(Reservation Reservation)
         {
-            _context.Update(Reservation);
+            await _context.UpdateAsync(Reservation);
             return Ok("Reservation Updated");
         }
 

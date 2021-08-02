@@ -30,24 +30,23 @@ namespace AirbnbAPI.Controllers
             return p;
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteWishlist(int id)
+        public async Task<ActionResult> DeleteWishlist(int id)
         {
-            _context.Delete(id, "");
+            await _context.DeleteAsync(id, "");
             return Ok("deleted");
         }
         [HttpPost]
 
-        public IActionResult AddWishlist(Wishlist Wishlist)
+        public async Task<ActionResult> AddWishlist(Wishlist Wishlist)
         {
-
-            _context.Insert(Wishlist);
-            return Ok("Wishlist Added");
+            var x = await _context.InsertAsync(Wishlist);
+            return Ok(x);
         }
 
         [HttpPut]
-        public IActionResult UpdateWishlist(Wishlist Wishlist)
+        public async Task<ActionResult> UpdateWishlist(Wishlist Wishlist)
         {
-            _context.Update(Wishlist);
+            await _context.UpdateAsync(Wishlist);
             return Ok("Wishlist Updated");
         }
 

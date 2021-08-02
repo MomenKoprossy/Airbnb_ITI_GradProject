@@ -11,7 +11,7 @@ namespace Data.Model
     public class Property
     {
         [Key]
-        public int? PropertyId { get; set; }
+        public int PropertyId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

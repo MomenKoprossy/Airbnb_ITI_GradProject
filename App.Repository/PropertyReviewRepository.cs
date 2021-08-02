@@ -18,40 +18,34 @@ namespace App.Repository
             this.context = context;
             PropertyReviewEntity = context.Set<PropertyReview>();
         }
-       
-       
-        public async void Insert(PropertyReview obj)
+
+
+        public async Task<int> InsertAsync(PropertyReview obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
+            return obj.PropertyID;
         }
-        public async void Update(PropertyReview obj)
+        public async Task UpdateAsync(PropertyReview obj)
         {
             context.Entry(obj).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
-        public async void Delete(int id, string id2)
+        public async Task DeleteAsync(int id, string id2)
         {
             PropertyReview p = await GetByIdAsync(id, "");
             PropertyReviewEntity.Remove(p);
             await context.SaveChangesAsync();
         }
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
         public async Task<IEnumerable<PropertyReview>> GetAllAsync()
         {
             return await PropertyReviewEntity.ToListAsync();
         }
-
         public async Task<PropertyReview> GetByIdAsync(int id, string id2)
         {
             return await PropertyReviewEntity.SingleOrDefaultAsync(s => s.PropertyID == id);
         }
-
-        public Task<IEnumerable<PropertyReview>> GetUserReservations(string id)
+        public Task<IEnumerable<PropertyReview>> GetUserReservationsAsync(string id)
         {
             throw new NotImplementedException();
         }
