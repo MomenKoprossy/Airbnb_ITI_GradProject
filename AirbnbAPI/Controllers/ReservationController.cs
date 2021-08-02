@@ -1,4 +1,5 @@
-﻿using App.Repository;
+﻿using AirbnbAPI.ActionFilters;
+using App.Repository;
 using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace AirbnbAPI.Controllers
             return Ok("deleted");
         }
         [HttpPost]
-
+        [ServiceFilter(typeof(EnsureReservationAvailablity))]
         public async Task<ActionResult> AddReservation(Reservation Reservation)
         {
 

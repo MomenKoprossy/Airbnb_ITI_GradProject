@@ -50,6 +50,7 @@ namespace AirbnbAPI.Controllers
             await _context.UpdateAsync(property);
             return Ok("property Updated");
         }
+        [HttpGet("{country}")]
         public async Task<ActionResult> GetNearbyPlaces(string country)
         {
             await _context.GetNearbyPlacesAsync(country);

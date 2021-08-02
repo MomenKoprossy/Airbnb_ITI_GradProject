@@ -29,6 +29,7 @@ namespace AirbnbAPI.ActionFilters
                 {
                     context.ModelState.AddModelError("Reservation Time Overlap", "Property is already reserved in the provided time range");
                     context.Result = new BadRequestObjectResult(context.ModelState);
+                    break;
                 }
             }
         }
