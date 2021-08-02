@@ -47,5 +47,10 @@ namespace App.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<Wishlist>> GetNearbyPlacesAsync(string country)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -47,5 +47,10 @@ namespace App.Repository
         {
             throw new System.NotImplementedException();
         }
+
+        public async Task<IEnumerable<Property>> GetNearbyPlacesAsync(string country)
+        {
+            return await PropertyEntity.Where(x => x.Country == country).ToListAsync();
+        }
     }
 }

@@ -49,5 +49,10 @@ namespace App.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<PropertyReview>> GetNearbyPlacesAsync(string country)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

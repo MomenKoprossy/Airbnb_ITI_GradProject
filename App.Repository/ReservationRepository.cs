@@ -48,5 +48,10 @@ namespace App.Repository
         {
             return await ReservationEntity.SingleOrDefaultAsync(s => s.ReservationID == id);
         }
+
+        public Task<IEnumerable<Reservation>> GetNearbyPlacesAsync(string country)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

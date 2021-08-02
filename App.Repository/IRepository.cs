@@ -11,6 +11,7 @@ namespace App.Repository
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id, string id2);
         Task<IEnumerable<T>> GetUserReservationsAsync(string id);
+        Task<IEnumerable<T>> GetNearbyPlacesAsync(string country);
         Task<int> InsertAsync(T obj);
         Task UpdateAsync(T obj);
         Task DeleteAsync(int id, string id2);

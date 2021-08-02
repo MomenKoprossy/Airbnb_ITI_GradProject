@@ -46,5 +46,10 @@ namespace App.Repository
         {
             throw new System.NotImplementedException();
         }
+
+        public Task<IEnumerable<PropertyImage>> GetNearbyPlacesAsync(string country)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
