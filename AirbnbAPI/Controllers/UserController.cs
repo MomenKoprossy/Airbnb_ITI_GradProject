@@ -2,6 +2,7 @@
 using Data.Model;
 using EmailService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -24,13 +26,15 @@ namespace AirbnbAPI.Controllers
         private SignInManager<User> SignInManager;
         private IEmailSender EmailSender;
         private IHttpContextAccessor HttpContextAccessor;
+        private readonly IWebHostEnvironment _host;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment host) 
         {
             UserManager = userManager;
             SignInManager = signInManager;
             EmailSender = emailSender;
             HttpContextAccessor = httpContextAccessor;
+            _host = host;
         }
 
         [HttpPost]
@@ -85,7 +89,8 @@ namespace AirbnbAPI.Controllers
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+                var userData = new { user.Fname, user.Image };
+                return Ok(new { token , userData });
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
@@ -138,8 +143,8 @@ namespace AirbnbAPI.Controllers
         {
             var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManager.FindByIdAsync(uid);
-            await UserManager.ChangePasswordAsync(user, changePasswordModel.CurrPassword, changePasswordModel.NewPassword);
-            return Ok();
+            var result = await UserManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
+            return Ok(result);
         }
         [HttpGet]
         [Route("UserDetails")]
@@ -165,14 +170,40 @@ namespace AirbnbAPI.Controllers
                 user.PhoneNumber = model.PhoneNumber;
             if (model.Street != "")
                 user.Street = model.Street;
-            if (model.Zipcode != 0)
-                user.Zipcode = model.Zipcode;
+            if (model.ZipCode != 0)
+                user.Zipcode = model.ZipCode;
             if (model.Country != "")
                 user.Country = model.Country;
             if (model.City != "")
                 user.City = model.City;
-            await UserManager.UpdateAsync(user);
-            return Ok("User Updated");
+            if (!string.IsNullOrEmpty(model.BirthDate.ToString()))
+                user.BirthDate = model.BirthDate;
+            if (model.Gender != null)
+                user.Gender = model.Gender;
+            var result = await UserManager.UpdateAsync(user);
+            return Ok(result);
         }
+
+        [HttpPut]
+        [Route("UpdateProfilePicture")]
+        [Authorize]
+        public async Task<ActionResult> UpdateProfilePicture()
+        {
+            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManager.FindByIdAsync(uid);
+
+            //Upload Image
+            //var postedFile = HttpContext.Request.Form.Files["image"];
+            var File = Request.Form.Files.FirstOrDefault();
+            var FileName = user.Id + File.FileName;
+            string uploads = Path.Combine(_host.WebRootPath, @"images\profile");
+            string fullpath = Path.Combine(uploads, FileName);
+            File.CopyTo(new FileStream(fullpath, FileMode.Create));
+            
+            user.Image = FileName;
+            var result = await UserManager.UpdateAsync(user);
+            return Ok(result);
+        }
+
     }
 }

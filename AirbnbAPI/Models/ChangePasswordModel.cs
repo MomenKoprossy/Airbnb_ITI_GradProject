@@ -9,7 +9,7 @@ namespace AirbnbAPI.Models
     public class ChangePasswordModel
     {
         [Required]
-        public string CurrPassword { get; set; }
+        public string CurrentPassword { get; set; }
         [Required]
         public string NewPassword { get; set; }
         [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
