@@ -23,14 +23,14 @@ namespace App.Repository
 
         public async Task<Property> GetByIdAsync(int id, string id2)
         {
-            return await PropertyEntity.SingleOrDefaultAsync(s => s.PropertyId == id);
+            return await PropertyEntity.SingleOrDefaultAsync(s => s.PropertyID == id);
         }
 
         public async Task<int> InsertAsync(Property obj)
         {
             context.Entry(obj).State = EntityState.Added;
             await context.SaveChangesAsync();
-            return obj.PropertyId;
+            return obj.PropertyID;
         }
         public async Task UpdateAsync(Property obj)
         {

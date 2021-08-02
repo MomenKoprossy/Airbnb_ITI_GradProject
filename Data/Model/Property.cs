@@ -11,36 +11,48 @@ namespace Data.Model
     public class Property
     {
         [Key]
-        public int PropertyId { get; set; }
+        [Column(name: "PropertyId")]
+        public int PropertyID { get; set; }
+        [Column(name: "Name")]
         [Required]
-        public string Name { get; set; }
+        public string PropertyName { get; set; }
+        [Column(name: "PricePerNight")]
         [Required]
-        public int PricePerNight { get; set; }
+        public int PropertyPricePerNight { get; set; }
+        [Column(name: "Longitude")]
         [Required]
-        public double Longitude { get; set; }
+        public double PropertyLongitude { get; set; }
+        [Column(name: "Latitude")]
         [Required]
-        public double Latitude { get; set; }
+        public double Propertylatitude { get; set; }
+        [Column(name: "Description")]
         [Required]
-        public string Description { get; set; }
+        public string PropertyDescription { get; set; }
+        [Column(name: "MaxOccupation")]
         [Required]
-        public int MaxOccupation { get; set; }
+        public int PropertyMaxOccupation { get; set; }
+        [Column(name: "TotalBeds")]
         [Required]
-        public int TotalBeds { get; set; }
+        public int PropertyTotalBeds { get; set; }
+        [Column(name: "TotalRooms")]
         [Required]
-        public int TotalRooms { get; set; }
+        public int PropertyTotalRooms { get; set; }
+        [Column(name: "TotalBathrooms")]
         [Required]
-        public int TotalBathrooms { get; set; }
+        public int PropertyTotalBathrooms { get; set; }
         [Required]
         public string Country { get; set; }
         [Required]
         public string City { get; set; }
         [Required]
         public string Address { get; set; }
+        [Column(name: "Type")]
         [Required]
-        public string Type { get; set; }
+        public string PropertyType { get; set; }
+        [Column(name: "HostId")]
         [Required]
         [ForeignKey("User")]
-        public string HostId { get; set; }
+        public string PropertyHostID { get; set; }
         public User User { get; set; }
         public ICollection<Amenity> Amenities { get; set; }
         public ICollection<Wishlist> Wishlists { get; set; }
