@@ -52,5 +52,10 @@ namespace App.Repository
         {
             return await PropertyEntity.Where(x => x.Country == country).ToListAsync();
         }
+
+        public Task<IEnumerable<Property>> GetPropertyImage(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

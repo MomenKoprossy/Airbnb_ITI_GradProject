@@ -12,6 +12,7 @@ namespace App.Repository
         Task<T> GetByIdAsync(int id, string id2);
         Task<IEnumerable<T>> GetUserReservationsAsync(string id);
         Task<IEnumerable<T>> GetNearbyPlacesAsync(string country);
+        Task<IEnumerable<T>> GetPropertyImage(int id);
         Task<int> InsertAsync(T obj);
         Task UpdateAsync(T obj);
         Task DeleteAsync(int id, string id2);

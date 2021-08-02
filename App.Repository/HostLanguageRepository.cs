@@ -52,5 +52,10 @@ namespace App.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<HostLanguage>> GetPropertyImage(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

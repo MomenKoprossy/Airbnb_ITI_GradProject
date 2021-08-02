@@ -51,5 +51,10 @@ namespace App.Repository
         {
             throw new System.NotImplementedException();
         }
+
+        public async Task<IEnumerable<PropertyImage>> GetPropertyImage(int id)
+        {
+            return await PropertyImageEntity.Where(x => x.PropertyID == id).ToListAsync();
+        }
     }
 }
