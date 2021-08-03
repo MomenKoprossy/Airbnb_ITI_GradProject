@@ -27,7 +27,7 @@ namespace AirbnbAPI.Controllers
         public async Task<ActionResult<Wishlist>> WishlistById(int id)
         {
             Wishlist p = await _context.GetByIdAsync(id, "");
-            return p;
+            return Ok(p);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteWishlist(int id)

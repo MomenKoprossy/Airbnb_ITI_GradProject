@@ -27,7 +27,7 @@ namespace AirbnbAPI.Controllers
         public async Task<ActionResult<HostLanguage>> HostLanguageById(string id)
         {
             HostLanguage p = await _context.GetByIdAsync(0, id);
-            return p;
+            return Ok(p);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteHostLanguage(string id)

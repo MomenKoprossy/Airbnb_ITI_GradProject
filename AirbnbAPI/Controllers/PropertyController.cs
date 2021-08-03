@@ -18,7 +18,7 @@ namespace AirbnbAPI.Controllers
     {
         private readonly IRepository<Property> _context;
         private UserManager<User> UserManager;
-        public PropertyController(UserManager<User> userManager,IRepository<Property> context)
+        public PropertyController(UserManager<User> userManager, IRepository<Property> context)
         {
             _context = context;
             UserManager = userManager;
@@ -32,7 +32,7 @@ namespace AirbnbAPI.Controllers
         public async Task<ActionResult<Property>> PropertyById(int id)
         {
             Property p = await _context.GetByIdAsync(id, "");
-            return p;
+            return Ok(p);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProperty(int id)
@@ -59,11 +59,11 @@ namespace AirbnbAPI.Controllers
             await _context.UpdateAsync(property);
             return Ok("property Updated");
         }
-        [HttpGet("{country}")]
+        [HttpGet("country/{country}")]
         public async Task<ActionResult> GetNearbyPlaces(string country)
         {
-            await _context.GetNearbyPlacesAsync(country);
-            return Ok();
+            var x = await _context.GetNearbyPlacesAsync(country);
+            return Ok(x);
         }
 
     }

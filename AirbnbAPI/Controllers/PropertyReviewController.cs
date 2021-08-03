@@ -27,7 +27,7 @@ namespace AirbnbAPI.Controllers
         public async Task<ActionResult<PropertyReview>> PropertyReviewById(int id)
         {
             PropertyReview p = await _context.GetByIdAsync(id, "");
-            return p;
+            return Ok(p);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePropertyReview(int id)

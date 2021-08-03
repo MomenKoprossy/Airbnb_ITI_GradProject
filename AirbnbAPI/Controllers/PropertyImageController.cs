@@ -21,7 +21,7 @@ namespace AirbnbAPI.Controllers
         private readonly IRepository<PropertyImage> _context;
         private UserManager<User> UserManager;
         private readonly IWebHostEnvironment _host;
-        public PropertyImageController(UserManager<User> userManager,IRepository<PropertyImage> context, IWebHostEnvironment host)
+        public PropertyImageController(UserManager<User> userManager, IRepository<PropertyImage> context, IWebHostEnvironment host)
         {
             _context = context;
             UserManager = userManager;
@@ -36,7 +36,7 @@ namespace AirbnbAPI.Controllers
         public async Task<ActionResult<PropertyImage>> PropertyImageById(int id)
         {
             PropertyImage p = await _context.GetByIdAsync(id, "");
-            return p;
+            return Ok(p);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePropertyImage(int id)
@@ -62,7 +62,7 @@ namespace AirbnbAPI.Controllers
 
             //Upload Image
             //var postedFile = HttpContext.Request.Form.Files["image"];
-            int propId=0;
+            int propId = 0;
             for (int i = 0; i < Request.Form.Files.Count; i++)
             {
                 var File = Request.Form.Files[i];
@@ -71,10 +71,10 @@ namespace AirbnbAPI.Controllers
                 string fullpath = Path.Combine(uploads, FileName);
                 File.CopyTo(new FileStream(fullpath, FileMode.Create));
                 PropertyImage propertyImage = new PropertyImage { Image = FileName, PropertyID = id };
-                propId= await _context.InsertAsync(propertyImage);
+                propId = await _context.InsertAsync(propertyImage);
             }
 
-            
+
             return Ok(propId);
         }
 
