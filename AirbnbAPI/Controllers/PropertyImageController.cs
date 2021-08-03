@@ -33,9 +33,9 @@ namespace AirbnbAPI.Controllers
             return Ok(await _context.GetAllAsync());
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<PropertyImage>> PropertyImageById(int id)
+        public async Task<ActionResult> PropertyImageById(int id)
         {
-            PropertyImage p = await _context.GetByIdAsync(id, "");
+            var p = await _context.GetPropertyImage(id);
             return Ok(p);
         }
         [HttpDelete("{id}")]
@@ -45,23 +45,10 @@ namespace AirbnbAPI.Controllers
             return Ok("deleted");
         }
         [HttpPost]
-
-        public async Task<ActionResult> AddPropertyImage(PropertyImage PropertyImage)
-        {
-            var x = await _context.InsertAsync(PropertyImage);
-            return Ok(x);
-        }
-
-        [HttpPost]
         [Route("AddPropertyImages/{id}")]
         [Authorize]
         public async Task<ActionResult> AddPropertyImage(int id)
         {
-            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManager.FindByIdAsync(uid);
-
-            //Upload Image
-            //var postedFile = HttpContext.Request.Form.Files["image"];
             int propId = 0;
             for (int i = 0; i < Request.Form.Files.Count; i++)
             {
@@ -73,12 +60,8 @@ namespace AirbnbAPI.Controllers
                 PropertyImage propertyImage = new PropertyImage { Image = FileName, PropertyID = id };
                 propId = await _context.InsertAsync(propertyImage);
             }
-
-
             return Ok(propId);
         }
-
-
         [HttpPut]
         public async Task<ActionResult> UpdatePropertyImage(PropertyImage PropertyImage)
         {
