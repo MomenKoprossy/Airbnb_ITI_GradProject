@@ -50,7 +50,6 @@ namespace Data.Model
         [Required]
         public string PropertyType { get; set; }
         [Column(name: "HostId")]
-        [Required]
         [ForeignKey("User")]
         public string PropertyHostID { get; set; }
         public User User { get; set; }
