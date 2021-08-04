@@ -44,8 +44,8 @@ namespace AirbnbAPI.Controllers
         [ServiceFilter(typeof(EnsureReservationAvailablity))]
         public async Task<ActionResult> AddReservation(Reservation Reservation)
         {
-            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Reservation.UserID = uid;
+            //var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //Reservation.UserID = uid;
             var x = await _context.InsertAsync(Reservation);
             return Ok(x);
         }
