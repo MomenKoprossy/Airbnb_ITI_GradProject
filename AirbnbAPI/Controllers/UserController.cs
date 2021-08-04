@@ -202,7 +202,7 @@ namespace AirbnbAPI.Controllers
             
             user.Image = FileName;
             var result = await UserManager.UpdateAsync(user);
-            return Ok(result);
+            return Ok(new { result, image = user.Image });
         }
 
     }
