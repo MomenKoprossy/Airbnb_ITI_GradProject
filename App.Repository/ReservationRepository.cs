@@ -20,7 +20,7 @@ namespace App.Repository
         }
         public async Task<IEnumerable<Reservation>> GetUserReservationsAsync(string id)
         {
-            return await ReservationEntity.Where(x => x.UserID == id).ToListAsync();
+            return await ReservationEntity.Where(x => x.UserID == id).Include(x => x.Property).Include(x => x.User).ToListAsync();
         }
         public async Task<int> InsertAsync(Reservation obj)
         {
@@ -41,12 +41,12 @@ namespace App.Repository
         }
         public async Task<IEnumerable<Reservation>> GetAllAsync()
         {
-            return await ReservationEntity.ToListAsync();
+            return await ReservationEntity.Include(x => x.Property).Include(x => x.User).ToListAsync();
         }
 
         public async Task<Reservation> GetByIdAsync(int id, string id2)
         {
-            return await ReservationEntity.SingleOrDefaultAsync(s => s.ReservationID == id);
+            return await ReservationEntity.Include(x => x.Property).Include(x => x.User).SingleOrDefaultAsync(s => s.ReservationID == id);
         }
 
         public Task<IEnumerable<Reservation>> GetNearbyPlacesAsync(string country)
