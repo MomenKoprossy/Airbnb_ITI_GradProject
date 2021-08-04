@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Model
@@ -54,7 +55,8 @@ namespace Data.Model
         public string PropertyHostID { get; set; }
         public User User { get; set; }
         public ICollection<Amenity> Amenities { get; set; }
+        [JsonIgnore]
         public ICollection<Wishlist> Wishlists { get; set; }
-
+        public ICollection<PropertyImage> PropertyImages { get; set; }
     }
 }

@@ -18,12 +18,12 @@ namespace App.Repository
         }
         public async Task<IEnumerable<Property>> GetAllAsync()
         {
-            return await PropertyEntity.ToListAsync();
+            return await PropertyEntity.Include(x => x.PropertyImages).Include(x => x.User).Include(x => x.Amenities).ToListAsync();
         }
 
         public async Task<Property> GetByIdAsync(int id, string id2)
         {
-            return await PropertyEntity.SingleOrDefaultAsync(s => s.PropertyID == id);
+            return await PropertyEntity.Include(x => x.PropertyImages).Include(x => x.User).Include(x => x.Amenities).SingleOrDefaultAsync(s => s.PropertyID == id);
         }
 
         public async Task<int> InsertAsync(Property obj)
@@ -50,7 +50,7 @@ namespace App.Repository
 
         public async Task<IEnumerable<Property>> GetNearbyPlacesAsync(string country)
         {
-            return await PropertyEntity.Where(x => x.Country == country).ToListAsync();
+            return await PropertyEntity.Where(x => x.Country == country).Include(x => x.PropertyImages).Include(x => x.User).Include(x => x.Amenities).ToListAsync();
         }
 
         public Task<IEnumerable<Property>> GetPropertyImage(int id)
