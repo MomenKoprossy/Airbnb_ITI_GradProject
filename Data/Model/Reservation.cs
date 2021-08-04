@@ -24,9 +24,7 @@ namespace Data.Model
         [Column(TypeName = "Date")]
         public DateTime ReservationEndDate { get; set; }
         public int TotalPrice { get; set; }
-        [JsonIgnore]
         public User User { get; set; }
-        [JsonIgnore]
         public Property Property { get; set; }
     }
 }
