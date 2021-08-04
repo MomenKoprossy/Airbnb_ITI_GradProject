@@ -2,6 +2,7 @@
 using App.Repository;
 using Data.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,10 @@ namespace AirbnbAPI.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IRepository<Reservation> _context;
-        public ReservationController(IRepository<Reservation> context)
+        private readonly UserManager<User> UserManager;
+        public ReservationController(IRepository<Reservation> context, UserManager<User> userManager)
         {
+            UserManager = userManager;
             _context = context;
         }
         [HttpGet]
@@ -41,7 +44,8 @@ namespace AirbnbAPI.Controllers
         [ServiceFilter(typeof(EnsureReservationAvailablity))]
         public async Task<ActionResult> AddReservation(Reservation Reservation)
         {
-
+            var uid = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Reservation.UserID = uid;
             var x = await _context.InsertAsync(Reservation);
             return Ok(x);
         }
